@@ -33,7 +33,7 @@ public static class Extensions
                     dbOptions =>
                     {
                         dbOptions.MigrationsAssembly(typeof(TContext).Assembly.GetName().Name);
-                    });
+                    }).UseSnakeCaseNamingConvention();
             // https://github.com/efcore/EFCore.NamingConventions
         });
 

@@ -65,7 +65,7 @@ public static class InfrastructureExtensions
         builder.Services.AddCustomHealthCheck();
 
 
-        builder.AddCustomIdentityServer();
+        builder.AddCustomIdentityServer(configuration);
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
         {

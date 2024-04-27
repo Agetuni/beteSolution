@@ -108,7 +108,7 @@ public static class Extensions
                             }
                         };
 
-                        if (app.Environment.IsDevelopment())
+                        if (app.Environment.IsProduction())
                         {
                             problem.ProblemDetails.Extensions.Add("exception", exceptionHandlerFeature?.Error.ToString());
                         }

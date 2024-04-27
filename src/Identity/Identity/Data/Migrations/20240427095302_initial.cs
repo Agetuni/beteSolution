@@ -32,6 +32,8 @@ namespace Identity.Data.Migrations
                     id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     first_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     last_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    refresh_token = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    refresh_token_expiry_time = table.Column<DateTime>(type: "datetime2", nullable: false),
                     user_name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),

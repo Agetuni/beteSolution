@@ -8,7 +8,7 @@ public class DesignTimeDbContextFactory : IDesignTimeDbContextFactory<IdentityCo
     {
         var builder = new DbContextOptionsBuilder<IdentityContext>();
 
-        builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bs_i;Trusted_Connection=True;MultipleActiveResultSets=true")
+        builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=bs_is;Trusted_Connection=True;MultipleActiveResultSets=true")
             .UseSnakeCaseNamingConvention();
         return new IdentityContext(builder.Options);
     }

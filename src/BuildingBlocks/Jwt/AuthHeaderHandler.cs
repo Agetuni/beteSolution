@@ -6,7 +6,6 @@
 //public class AuthHeaderHandler : DelegatingHandler
 //{
 //    private readonly IHttpContextAccessor _httpContext;
-
 //    public AuthHeaderHandler(IHttpContextAccessor httpContext)
 //    {
 //        _httpContext = httpContext;

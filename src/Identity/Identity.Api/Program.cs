@@ -18,8 +18,8 @@ builder.AddInfrastructure();
 
 //app
 var app = builder.Build();
-app.MapMinimalEndpoints();
 app.UseInfrastructure();
+app.MapMinimalEndpoints();
 app.Run();
 
 // Hola!

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Identity.Data.Migrations
 {
     [DbContext(typeof(IdentityContext))]
-    [Migration("20240427092912_initial")]
+    [Migration("20240427095302_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -145,6 +145,14 @@ namespace Identity.Data.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit")
                         .HasColumnName("phone_number_confirmed");
+
+                    b.Property<string>("RefreshToken")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("refresh_token");
+
+                    b.Property<DateTime>("RefreshTokenExpiryTime")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("refresh_token_expiry_time");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)")
