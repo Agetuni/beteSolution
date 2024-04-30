@@ -1,6 +1,5 @@
 ﻿using BuildingBlocks;
 using BuildingBlocks.Core.CQRS;
-using BuildingBlocks.Jwt;
 using BuildingBlocks.Web;
 using FluentValidation;
 using Identity.Identity.Model;
@@ -11,16 +10,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Security.Claims;
-using System.Text;
 
-namespace Identity.Identity.Features.Login;
+namespace Identity.Identity.Features.Auth;
+
 //dto
 public record LoginResponseDto(Guid Id, string Name, string UserName, List<string> Roles, string AccessToken, string RefreshToken);
 
@@ -56,7 +50,7 @@ internal class LoginHandler : ICommandHandler<LoginRequest, LoginResponseDto>
         _roleManager = roleManager;
         _configuration = configuration;
         _signInManager = signInManager;
-        _tokenService = tokenService;   
+        _tokenService = tokenService;
     }
 
     public async Task<LoginResponseDto> Handle(LoginRequest request, CancellationToken cancellationToken)
@@ -74,7 +68,7 @@ internal class LoginHandler : ICommandHandler<LoginRequest, LoginResponseDto>
         return new LoginResponseDto(user.Id, $"{user.FirstName} {user.LastName}", user.UserName, userRoles.ToList(), accesstoken, refershToken);
     }
 
-  
+
 }
 public class Login : IMinimalEndpoint
 {
@@ -87,6 +81,7 @@ public class Login : IMinimalEndpoint
             var result = await mediator.Send(request, cancellationToken);
             return Results.Ok(result);
         })
+            .RequireAuthorization()
             .WithName("Login")
             .WithApiVersionSet(builder.NewApiVersionSet("auth").Build())
             .Produces<LoginResponseDto>()

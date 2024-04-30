@@ -21,7 +21,7 @@ public class IdentityDataSeeder : IDataSeeder
 
     public async Task SeedAllAsync()
     {
-        await SeedTenant();
+        //await SeedTenant();
         await SeedRoles();
         await SeedUsers();
     }

@@ -2,7 +2,6 @@
 using BuildingBlocks.Core.CQRS;
 using BuildingBlocks.Web;
 using FluentValidation;
-using Identity.Identity.Features.Login;
 using Identity.Identity.Model;
 using Identity.Identity.Service;
 using MapsterMapper;
@@ -13,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Routing;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace Identity.Identity.Features;
+namespace Identity.Identity.Features.Auth;
 
 //command
 public record RefreshTokenCommand(string UserName, string token) : ICommand<LoginResponseDto>;

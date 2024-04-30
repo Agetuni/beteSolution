@@ -13,13 +13,17 @@ builder.Host.UseDefaultServiceProvider((context, options) =>
     options.ValidateScopes = context.HostingEnvironment.IsDevelopment() || context.HostingEnvironment.IsStaging() || context.HostingEnvironment.IsEnvironment("tests");
     options.ValidateOnBuild = true;
 });
+
+
 builder.AddMinimalEndpoints(assemblies: typeof(IdentityRoot).Assembly);
 builder.AddInfrastructure();
 
 //app
 var app = builder.Build();
-app.UseInfrastructure();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapMinimalEndpoints();
+app.UseInfrastructure();
 app.Run();
 
 // Hola!

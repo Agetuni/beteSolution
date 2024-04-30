@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using BuildingBlocks.Exceptions;
 using Serilog;
 using Microsoft.Extensions.Hosting;
+using BuildingBlocks.Jwt;
 
 namespace Identity.Extensions.Infrastructure;
 
@@ -50,12 +51,11 @@ public static class InfrastructureExtensions
                         Window = TimeSpan.FromMinutes(1)
                     }));
         });
-
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddControllers();
+        builder.AddCustomSerilog(env);
+        builder.Services.AddJwt();
         builder.Services.AddCustomDbContext<IdentityContext>();
         builder.Services.AddScoped<IDataSeeder, IdentityDataSeeder>();
-        builder.AddCustomSerilog(env);
         builder.Services.AddCustomSwagger(configuration, typeof(IdentityRoot).Assembly);
         builder.Services.AddCustomVersioning();
         builder.Services.AddCustomMediatR();
@@ -63,8 +63,6 @@ public static class InfrastructureExtensions
         builder.Services.AddProblemDetails();
         builder.Services.AddCustomMapster(typeof(IdentityRoot).Assembly);
         builder.Services.AddCustomHealthCheck();
-
-
         builder.AddCustomIdentityServer(configuration);
 
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
@@ -82,7 +80,7 @@ public static class InfrastructureExtensions
         var env = app.Environment;
         var appOptions = app.GetOptions<AppOptions>(nameof(AppOptions));
 
-
+        
         app.UseForwardedHeaders();
 
         app.UseCustomProblemDetails();
@@ -99,8 +97,6 @@ public static class InfrastructureExtensions
         {
             app.UseCustomSwagger();
         }
-        app.UseAuthentication();
-        app.UseAuthorization();
 
         return app;
     }
