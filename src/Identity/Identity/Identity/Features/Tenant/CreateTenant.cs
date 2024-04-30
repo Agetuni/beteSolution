@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authorization;
 
 namespace Identity.Identity.Features;
 
@@ -62,14 +61,15 @@ public class CreateTenant : IMinimalEndpoint
             return Results.CreatedAtRoute("GetTenantById", new { id = result.Id }, result);
         })
         .WithName("CreateTenant")
-        .RequireAuthorization()
         .WithApiVersionSet(builder.NewApiVersionSet("Tenant").Build())
         .Produces<CreateTenantResponse>(StatusCodes.Status201Created)
         .ProducesProblem(StatusCodes.Status400BadRequest)
         .WithSummary("Create Tenant")
         .WithDescription("Create Tenant")
         .WithOpenApi()
-        .HasApiVersion(1.0);
+        .HasApiVersion(1.0)
+        .RequireAuthorization("login");
+
         return builder;
     }
 }

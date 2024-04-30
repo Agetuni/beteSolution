@@ -16,12 +16,14 @@ builder.Host.UseDefaultServiceProvider((context, options) =>
 
 
 builder.AddMinimalEndpoints(assemblies: typeof(IdentityRoot).Assembly);
+
 builder.AddInfrastructure();
 
 //app
 var app = builder.Build();
-app.UseAuthentication();
 app.UseAuthorization();
+app.UseAuthorization();
+
 app.MapMinimalEndpoints();
 app.UseInfrastructure();
 app.Run();

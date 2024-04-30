@@ -6,15 +6,15 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using BuildingBlocks.Jwt;
 
 namespace Identity.Extensions.Infrastructure;
 
 public static class IdentityServerExtensions
 {
-    public static WebApplicationBuilder AddCustomIdentityServer(this WebApplicationBuilder builder, IConfiguration configuration)
+    public static void AddCustomIdentityServer(this WebApplicationBuilder builder, IConfiguration configuration)
     {
-        builder.Services.AddScoped<ITokenService,TokenService>();   
+        builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.Configure<JWTSettings>(configuration.GetSection("JWTSettings"));
         builder.Services.AddIdentity<User, Role>(config =>
         {
@@ -25,7 +25,8 @@ public static class IdentityServerExtensions
         })
             .AddEntityFrameworkStores<IdentityContext>()
             .AddDefaultTokenProviders()
-            .AddTokenProvider("Identity", typeof(DataProtectorTokenProvider<User>)); ;
-        return builder;
+            .AddTokenProvider("Identity", typeof(DataProtectorTokenProvider<User>));
+
+        
     }
 }

@@ -53,7 +53,6 @@ public static class InfrastructureExtensions
         });
         builder.Services.AddEndpointsApiExplorer();
         builder.AddCustomSerilog(env);
-        builder.Services.AddJwt();
         builder.Services.AddCustomDbContext<IdentityContext>();
         builder.Services.AddScoped<IDataSeeder, IdentityDataSeeder>();
         builder.Services.AddCustomSwagger(configuration, typeof(IdentityRoot).Assembly);
@@ -64,7 +63,8 @@ public static class InfrastructureExtensions
         builder.Services.AddCustomMapster(typeof(IdentityRoot).Assembly);
         builder.Services.AddCustomHealthCheck();
         builder.AddCustomIdentityServer(configuration);
-
+        builder.AddJwtCustomExtensions(configuration);
+        builder.Services.AddCors();
         builder.Services.Configure<ForwardedHeadersOptions>(options =>
         {
             options.ForwardedHeaders =
@@ -80,7 +80,9 @@ public static class InfrastructureExtensions
         var env = app.Environment;
         var appOptions = app.GetOptions<AppOptions>(nameof(AppOptions));
 
-        
+        //cors
+
+
         app.UseForwardedHeaders();
 
         app.UseCustomProblemDetails();
@@ -97,7 +99,13 @@ public static class InfrastructureExtensions
         {
             app.UseCustomSwagger();
         }
-
+        app.UseCors(builder =>
+        {
+            builder.WithOrigins("https://localhost:3000","http://localhost:3000")
+                .AllowAnyMethod()                    // Allow any HTTP method
+                   .AllowAnyHeader()                    // Allow any HTTP headers
+                   .AllowCredentials();                 // Allow credentials (e.g., cookies, authorization headers)
+        });
         return app;
     }
 }

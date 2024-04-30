@@ -33,8 +33,10 @@ public class TokenService : ITokenService
             new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email),
+            new Claim("username", user.UserName),
             new Claim("uid", user.Id.ToString()),
-            new Claim("ip", ipAddress)
+            new Claim("ip", ipAddress),
+            new Claim("fullNmae", $"{user.FirstName} {user.LastName}")
         }
         .Union(roleClaims);
 

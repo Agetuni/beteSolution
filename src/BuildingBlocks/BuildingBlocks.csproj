@@ -105,7 +105,6 @@
     <PackageReference Include="Respawn" Version="6.2.1" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="8.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.3" />
-    <PackageReference Include="WebMotions.Fake.Authentication.JwtBearer" Version="8.0.1" />
 
     <PackageReference Include="Google.Protobuf" Version="3.26.1" />
     <PackageReference Include="Grpc.Net.ClientFactory" Version="2.62.0" />

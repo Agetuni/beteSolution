@@ -81,7 +81,6 @@ public class Login : IMinimalEndpoint
             var result = await mediator.Send(request, cancellationToken);
             return Results.Ok(result);
         })
-            .RequireAuthorization()
             .WithName("Login")
             .WithApiVersionSet(builder.NewApiVersionSet("auth").Build())
             .Produces<LoginResponseDto>()
